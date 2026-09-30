@@ -107,6 +107,46 @@ section.part { padding-block: 64px; border-top: 1px solid var(--rule); }
 .salon .h-mv p { margin: 0; font-family: "Zen Old Mincho", "Yu Mincho", serif; font-size: clamp(11px, 2.1vw, 19px); line-height: 1.5; }
 .salon .h-mv div { height: 100%; border-radius: 999px 999px 4px 4px; background: linear-gradient(160deg, #dfe5da, #b9c8b5); }
 
+.tax { background: #fff; color: #2a3336; }
+.tax .t-top { background: #0f4c5c; height: 5%; }
+.tax .t-head { height: 12%; display: flex; align-items: center; justify-content: space-between; padding-inline: 5%; font-weight: 700; color: #0f4c5c; font-size: clamp(9px, 1.3vw, 12px); }
+.tax .t-head small { font-weight: 700; }
+.tax .t-nav { background: #0f4c5c; height: 7%; }
+.tax .t-mv { flex: 1; background: linear-gradient(120deg, #e7f0f1, #f6f9f9); padding: 5% 6%; display: flex; flex-direction: column; justify-content: center; gap: 8%; color: #0f4c5c; font-weight: 700; font-size: clamp(10px, 1.7vw, 16px); line-height: 1.5; }
+.tax .t-mv b { align-self: flex-start; background: #e07a2f; color: #fff; font-size: .7em; padding: 2px 10px; border-radius: 3px; }
+.tax .t-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3%; padding: 4% 6%; height: 24%; }
+.tax .t-cards i { border: 1px solid #dde4e6; border-top: 3px solid #0f4c5c; }
+.tax .t-cards i:last-child { border-top-color: #e07a2f; }
+
+.phones { background: linear-gradient(135deg, #efe9df, #e2d8c8); flex-direction: row; align-items: center; justify-content: center; gap: 8%; }
+.phone { width: 30%; aspect-ratio: 9 / 17; background: #fff; border: 3px solid #3b2f25; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.phone-wrap { position: relative; width: 30%; }
+.phone-wrap .phone { width: 100%; }
+.phone-wrap span { display: block; text-align: center; font-size: 11px; font-weight: 700; color: #3b2f25; margin-top: 4px; }
+.p-before .bar { background: #6b4f36; height: 6%; }
+.p-before .mv { background: linear-gradient(160deg, #c9b79c, #8c7355); height: 22%; width: 150%; }
+.p-before .txt { padding: 6%; display: grid; gap: 3px; width: 160%; }
+.p-before .txt i { height: 2px; background: #cbbfae; }
+.p-after .bar { background: #6b4f36; height: 14%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; padding: 1px; }
+.p-after .bar i { background: #7d6147; }
+.p-after .mv { background: linear-gradient(160deg, #c9b79c, #8c7355); height: 24%; }
+.p-after .txt { padding: 8%; display: grid; gap: 5px; }
+.p-after .txt i { height: 4px; background: #cbbfae; border-radius: 2px; }
+.p-after .txt i:nth-child(3n) { width: 70%; }
+.p-after .call { margin-top: auto; background: #b5572f; height: 10%; }
+
+.lp { background: #eef5fc; flex-direction: row; align-items: center; gap: 6%; padding-inline: 7%; }
+.lp .l-copy { flex: 1.1; font-family: "M PLUS Rounded 1c", "Zen Kaku Gothic New", sans-serif; font-weight: 800; color: #16324f; font-size: clamp(11px, 2vw, 19px); line-height: 1.4; }
+.lp .l-copy em { font-style: normal; color: #f47c20; }
+.lp .l-copy b { display: inline-block; margin-top: 10%; background: #f47c20; color: #fff; font-size: .6em; padding: 4px 12px; border-radius: 99px; box-shadow: 0 3px 0 #d9650c; }
+.lp .l-blocks { flex: .9; display: flex; flex-direction: column; gap: 3px; }
+.lp .l-blocks i { height: clamp(10px, 1.8vw, 16px); border-radius: 4px; }
+.lp .l-blocks i:nth-child(1) { background: #f5c125; width: 80%; border-radius: 10px 10px 4px 4px; }
+.lp .l-blocks i:nth-child(2) { background: #3d8bf2; width: 70%; margin-left: 10%; }
+.lp .l-blocks i:nth-child(3) { background: #3fae5a; width: 85%; margin-left: 10%; }
+.lp .l-blocks i:nth-child(4) { background: #8a63e8; width: 55%; margin-left: 10%; }
+.lp .l-blocks i:nth-child(5) { background: #f47c20; width: 75%; }
+
 /* できること */
 .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .skill { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
@@ -144,7 +184,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
     <div class="wrap">
       <div class="part-head">
         <h2>Works</h2>
-        <span>制作実績（いずれも架空の店舗のサンプルです）</span>
+        <span>制作実績（いずれも架空の依頼によるサンプルです）</span>
       </div>
 
       <div class="works">
@@ -173,6 +213,94 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
             <div class="links">
               <a class="btn btn-main" href="https://mashite792.github.io/sushi-matsuda/" target="_blank" rel="noopener">サイトを見る</a>
               <a class="btn" href="https://github.com/mashite792/sushi-matsuda/commits/main" target="_blank" rel="noopener">修正履歴を見る</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="work">
+          <a class="thumb" href="https://mashite792.github.io/tsubasa-tax/" target="_blank" rel="noopener" aria-label="つばさ税理士事務所 のサイトを開く">
+            <div class="thumb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="screen tax" aria-hidden="true">
+              <div class="t-top"></div>
+              <div class="t-head"><span>つばさ税理士事務所</span><small>022-000-5678</small></div>
+              <div class="t-nav"></div>
+              <div class="t-mv">創業から事業承継まで、<br>仙台の経営者に寄り添う税理士です。<b>無料相談</b></div>
+              <div class="t-cards"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </a>
+          <div class="work-body">
+            <span class="kind">既存サイトの修正</span>
+            <h3>つばさ税理士事務所</h3>
+            <p class="summary">2ページ構成の税理士事務所サイト。サービス追加や体制変更など、事務所からの修正依頼4件に対応しました。</p>
+            <ul class="done-list">
+              <li>新サービス（相続税申告）を業務内容と料金表に追加</li>
+              <li>税理士の増員に合わせて、事務所概要の修正と紹介枠の追加</li>
+              <li>2ページに散らばった受付時間の表記7か所を、検索して漏れなく変更</li>
+              <li>フォームでハイフン付きの電話番号が送信できない不具合を修正。全角数字やカッコ付きの入力も受け付けるように改善</li>
+            </ul>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>フォーム</span><span>Git</span></div>
+            <div class="links">
+              <a class="btn btn-main" href="https://mashite792.github.io/tsubasa-tax/" target="_blank" rel="noopener">サイトを見る</a>
+              <a class="btn" href="https://github.com/mashite792/tsubasa-tax" target="_blank" rel="noopener">依頼内容と対応</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="work">
+          <a class="thumb" href="https://mashite792.github.io/morishita-koumuten/" target="_blank" rel="noopener" aria-label="森下工務店 の修正後サイトを開く">
+            <div class="thumb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="screen phones" aria-hidden="true">
+              <div class="phone-wrap">
+                <div class="phone p-before"><div class="bar"></div><div class="mv"></div><div class="txt"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+                <span>修正前</span>
+              </div>
+              <div class="phone-wrap">
+                <div class="phone p-after"><div class="bar"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="mv"></div><div class="txt"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="call"></div></div>
+                <span>修正後</span>
+              </div>
+            </div>
+          </a>
+          <div class="work-body">
+            <span class="kind">スマホ表示の修正</span>
+            <h3>森下工務店</h3>
+            <p class="summary">パソコン用の幅で固定されていた工務店サイトを、パソコンでの見た目を保ったままスマホに対応させました。</p>
+            <ul class="done-list">
+              <li>文字が極端に小さくなる原因（viewport の指定漏れ）を特定して修正</li>
+              <li>固定幅と float のレイアウトを、画面幅に合わせて縮む作りに置き換え</li>
+              <li>はみ出していた施工事例の表を、スマホでは1件ずつのカード表示に組み替え</li>
+              <li>タップで電話がかかるリンクと、画面下に固定の電話ボタンを追加</li>
+            </ul>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>レスポンシブ</span><span>Git</span></div>
+            <div class="links">
+              <a class="btn btn-main" href="https://mashite792.github.io/morishita-koumuten/" target="_blank" rel="noopener">修正後を見る</a>
+              <a class="btn" href="https://mashite792.github.io/morishita-koumuten/before/" target="_blank" rel="noopener">修正前を見る</a>
+              <a class="btn" href="https://github.com/mashite792/morishita-koumuten" target="_blank" rel="noopener">原因と対応</a>
+            </div>
+            <p class="note">スマホで開くか、ブラウザの開発者ツールでスマホ表示にすると違いがわかります。</p>
+          </div>
+        </article>
+
+        <article class="work">
+          <a class="thumb" href="https://mashite792.github.io/tsumiki-lp/" target="_blank" rel="noopener" aria-label="つみきプログラミング教室 のLPを開く">
+            <div class="thumb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="screen lp" aria-hidden="true">
+              <div class="l-copy">好きなゲームを、<br><em>自分でつくって</em><br>みよう。<br><b>無料体験会</b></div>
+              <div class="l-blocks"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </a>
+          <div class="work-body">
+            <span class="kind">LP 新規制作</span>
+            <h3>つみきプログラミング教室</h3>
+            <p class="summary">小学生向けプログラミング教室の、無料体験会への申し込みを集めるための1ページのLPです。</p>
+            <ul class="done-list">
+              <li>保護者の悩み → 特長 → 学年別のコース → 料金 → よくある質問 → 申込、の順で不安を解消する構成</li>
+              <li>プログラミングのブロックを積み上げた絵をCSSだけで描き、教室の内容がひと目で伝わるように</li>
+              <li>申込フォームの希望日は、今日以降の土曜日を自動で表示</li>
+              <li>よくある質問は、タップで開閉する形にしてページを短く</li>
+            </ul>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>LP</span><span>レスポンシブ</span></div>
+            <div class="links">
+              <a class="btn btn-main" href="https://mashite792.github.io/tsumiki-lp/" target="_blank" rel="noopener">LPを見る</a>
             </div>
           </div>
         </article>
@@ -211,11 +339,11 @@ footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size:
       <div class="part-head"><h2>Skills</h2><span>対応できる作業</span></div>
       <div class="skills">
         <div class="skill"><h3>テキスト・料金・営業時間の更新</h3><p>複数ページにまたがる情報も、全ファイルを検索して漏れなく修正します。</p></div>
-        <div class="skill"><h3>メニューやセクションの追加</h3><p>既存のデザインに合わせて、新しい項目やお知らせ枠を追加します。</p></div>
+        <div class="skill"><h3>メニュー・セクション・画像の追加</h3><p>既存のデザインに合わせて、新しい項目やお知らせ枠、写真の枠を追加します。</p></div>
         <div class="skill"><h3>スマホ表示の調整</h3><p>表示崩れの修正や、スマホ向けレイアウトの調整を行います。</p></div>
         <div class="skill"><h3>不具合の調査と修正</h3><p>ボタンが動かない、表示されないといった不具合の原因を調べて直します。</p></div>
-        <div class="skill"><h3>画像の差し替え・追加</h3><p>写真の入れ替えや、画像を置く枠の追加に対応します。</p></div>
-        <div class="skill"><h3>小規模サイトの新規制作</h3><p>店舗やサービスを紹介する1〜数ページのサイトを制作します。</p></div>
+        <div class="skill"><h3>フォームの不具合修正</h3><p>入力チェックが厳しすぎて送れない、といったフォームの問題を直します。</p></div>
+        <div class="skill"><h3>LP・小規模サイトの新規制作</h3><p>申し込みや来店につなげる1ページのLPや、店舗・事務所の紹介サイトを制作します。</p></div>
       </div>
     </div>
   </section>
