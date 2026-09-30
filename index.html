@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kanari｜Webサイト制作・修正</title>
+<meta name="description" content="kanari のポートフォリオ。HTML/CSSによるWebサイトの修正・制作、スマホ対応、JavaScriptの不具合修正を行っています。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: 左寄せの名前と一文 → 作品を横長の行で2件（見本サムネイル＋作業内容） → できること → 進め方の6手順 */
+:root {
+  --paper: #f5f5f1;
+  --card: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5f636b;
+  --rule: #dcdcd4;
+  --canary: #f0c419;
+  --canary-ink: #7a5d00;
+  --font-display: "Bricolage Grotesque", "Zen Kaku Gothic New", system-ui, sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16171a; --card: #1e2024; --ink: #ececea; --muted: #a2a5ab;
+    --rule: #2e3036; --canary: #e8bd22; --canary-ink: #f0cd55;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: .02em;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--canary); outline-offset: 3px; }
+.wrap { max-width: 1000px; margin-inline: auto; padding-inline: 20px; }
+
+/* ヒーロー */
+.hero { padding-block: 88px 56px; }
+.hero .label { font-family: var(--font-mono); font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(64px, 14vw, 132px); line-height: .95; letter-spacing: -.03em;
+  margin: 0 0 28px;
+}
+.hero h1 .dot { color: var(--canary); }
+.hero p { font-size: clamp(17px, 2.4vw, 20px); max-width: 34em; margin: 0; text-wrap: balance; }
+.mark { background: linear-gradient(transparent 62%, color-mix(in srgb, var(--canary) 55%, transparent) 62%); }
+.hero nav { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 36px; font-size: 14px; }
+.hero nav a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.hero nav a:hover { border-color: var(--ink); }
+
+/* セクション共通 */
+section.part { padding-block: 64px; border-top: 1px solid var(--rule); }
+.part-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
+.part-head h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; margin: 0; letter-spacing: -.01em; }
+.part-head span { font-size: 13px; color: var(--muted); }
+
+/* 作品 */
+.works { display: grid; gap: 48px; }
+.work { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.work-body { min-width: 0; }
+.kind { display: inline-block; font-family: var(--font-mono); font-size: 12px; color: var(--canary-ink); border: 1px solid currentColor; border-radius: 4px; padding: 0 8px; }
+.work h3 { font-size: 24px; font-weight: 700; margin: 10px 0 6px; line-height: 1.4; }
+.work .summary { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+.done-list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 6px; font-size: 15px; }
+.done-list li { display: grid; grid-template-columns: 1.2em 1fr; }
+.done-list li::before { content: "—"; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.tags span { font-family: var(--font-mono); font-size: 12px; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 8px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-block; text-decoration: none; font-size: 14px; font-weight: 500; padding: 9px 20px; border-radius: 999px; border: 1px solid var(--ink); transition: background .15s, color .15s; }
+.btn-main { background: var(--ink); color: var(--paper); }
+.btn-main:hover { background: transparent; color: var(--ink); }
+.btn:not(.btn-main):hover { background: var(--ink); color: var(--paper); }
+.note { font-size: 12px; color: var(--muted); margin-top: 14px; }
+@media (max-width: 760px) { .work { grid-template-columns: 1fr; gap: 20px; } }
+
+/* 作品サムネイル：各サイトの配色を縮小して再現したミニ画面 */
+.thumb { display: block; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--card); text-decoration: none; box-shadow: 0 18px 40px -28px rgba(0,0,0,.45); transition: transform .2s; }
+.thumb:hover { transform: translateY(-3px); }
+.thumb-bar { display: flex; gap: 5px; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.thumb-bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
+.screen { aspect-ratio: 16 / 10; max-width: 100%; display: flex; flex-direction: column; }
+.sushi { background: #fff; }
+.sushi .s-top { background: #a8322d; height: 5%; }
+.sushi .s-head { background: #1c2a3f; height: 11%; display: flex; align-items: center; padding-inline: 5%; color: #fff; font-family: "Noto Serif JP", serif; font-size: clamp(9px, 1.4vw, 13px); }
+.sushi .s-mv { background: linear-gradient(135deg, #2b3d57, #1c2a3f); flex: 1; display: grid; place-items: center; color: #fff; font-family: "Noto Serif JP", "Yu Mincho", serif; font-size: clamp(11px, 2vw, 18px); letter-spacing: .1em; text-align: center; line-height: 1.6; }
+.sushi .s-cards { display: flex; gap: 4%; padding: 4% 8%; background: #f4f4f2; height: 30%; }
+.sushi .s-cards div { flex: 1; background: #fff; border: 1px solid #ddd; display: grid; place-items: center; color: #a8322d; font-size: clamp(8px, 1.2vw, 12px); font-weight: 700; }
+.salon { background: #eef0eb; color: #1f2621; }
+.salon .h-top { background: #3f5a45; height: 5%; }
+.salon .h-head { height: 11%; display: flex; align-items: center; justify-content: space-between; padding-inline: 5%; border-bottom: 1px solid #cfd6cd; font-size: clamp(9px, 1.3vw, 12px); }
+.salon .h-head b { background: #b5523f; color: #fff; border-radius: 99px; padding: 1px 8px; font-weight: 500; font-size: .85em; }
+.salon .h-mv { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 6%; padding: 5% 6%; align-items: center; }
+.salon .h-mv p { margin: 0; font-family: "Zen Old Mincho", "Yu Mincho", serif; font-size: clamp(11px, 2.1vw, 19px); line-height: 1.5; }
+.salon .h-mv div { height: 100%; border-radius: 999px 999px 4px 4px; background: linear-gradient(160deg, #dfe5da, #b9c8b5); }
+
+/* できること */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.skill { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+.skill h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.skill p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+/* 進め方 */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; counter-reset: step; }
+.steps li { counter-increment: step; border-top: 2px solid var(--ink); padding-top: 12px; }
+.steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 13px; color: var(--canary-ink); }
+.steps h3 { margin: 2px 0 4px; font-size: 16px; font-weight: 700; }
+.steps p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; gap: 20px; } }
+
+footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="label">Web site fixes &amp; builds</p>
+    <h1>kanari<span class="dot">.</span></h1>
+    <p>既存のWebサイトの<span class="mark">修正・更新</span>を中心に、小さなお店のサイト制作までお手伝いしています。直し漏れのない修正と、変更内容のわかりやすい報告を大切にしています。</p>
+    <nav aria-label="ページ内リンク">
+      <a href="#works">制作実績</a>
+      <a href="#skills">対応できる作業</a>
+      <a href="#flow">作業の進め方</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="part" id="works">
+    <div class="wrap">
+      <div class="part-head">
+        <h2>Works</h2>
+        <span>制作実績（いずれも架空の店舗のサンプルです）</span>
+      </div>
+
+      <div class="works">
+        <article class="work">
+          <a class="thumb" href="https://mashite792.github.io/sushi-matsuda/" target="_blank" rel="noopener" aria-label="鮨 まつ田 のサイトを開く">
+            <div class="thumb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="screen sushi" aria-hidden="true">
+              <div class="s-top"></div>
+              <div class="s-head">鮨 まつ田</div>
+              <div class="s-mv">江戸前の仕事を、<br>カウンター八席で。</div>
+              <div class="s-cards"><div>9,900円</div><div>4,400円</div></div>
+            </div>
+          </a>
+          <div class="work-body">
+            <span class="kind">既存サイトの修正</span>
+            <h3>鮨 まつ田</h3>
+            <p class="summary">3ページ構成の寿司店サイト。別の制作者が作ったサイトに、店主からの修正依頼5件を反映しました。</p>
+            <ul class="done-list">
+              <li>ランチ営業の追加（トップのお知らせ・お品書き・店舗案内・全ページのフッター）</li>
+              <li>コース料金の改定。同じ金額が書かれた全ページを検索して直し漏れを防止</li>
+              <li>スマホで「MENU」ボタンが動かない不具合の原因を調査し、JavaScriptを修正</li>
+              <li>支払い方法・コピーライト年号の更新</li>
+              <li>写真の差し替え枠を追加（写真を置くだけで表示される作り）</li>
+            </ul>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>レスポンシブ</span><span>Git</span></div>
+            <div class="links">
+              <a class="btn btn-main" href="https://mashite792.github.io/sushi-matsuda/" target="_blank" rel="noopener">サイトを見る</a>
+              <a class="btn" href="https://github.com/mashite792/sushi-matsuda/commits/main" target="_blank" rel="noopener">修正履歴を見る</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="work">
+          <a class="thumb" href="https://mashite792.github.io/salon-hanon/" target="_blank" rel="noopener" aria-label="atelier 葉音 のサイトを開く">
+            <div class="thumb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="screen salon" aria-hidden="true">
+              <div class="h-top"></div>
+              <div class="h-head"><span>atelier 葉音</span><b>ご予約</b></div>
+              <div class="h-mv"><p>髪にも、<br>季節の手入れを。</p><div></div></div>
+            </div>
+          </a>
+          <div class="work-body">
+            <span class="kind">新規制作＋修正</span>
+            <h3>atelier 葉音</h3>
+            <p class="summary">席数3つの小さな美容室を想定した1ページのサイト。制作後、オーナーからの修正依頼4件に対応しました。</p>
+            <ul class="done-list">
+              <li>コンセプト・料金表・スタッフ紹介・予約フォーム・店舗情報を1ページに構成</li>
+              <li>スマホ表示とダークモードに対応</li>
+              <li>新メニュー（縮毛矯正）の追加と、予約フォームの選択肢への反映</li>
+              <li>「予約ボタンを目立たせたい」という要望に合わせて配色を調整</li>
+            </ul>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>レスポンシブ</span><span>フォーム</span></div>
+            <div class="links">
+              <a class="btn btn-main" href="https://mashite792.github.io/salon-hanon/" target="_blank" rel="noopener">サイトを見る</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="skills">
+    <div class="wrap">
+      <div class="part-head"><h2>Skills</h2><span>対応できる作業</span></div>
+      <div class="skills">
+        <div class="skill"><h3>テキスト・料金・営業時間の更新</h3><p>複数ページにまたがる情報も、全ファイルを検索して漏れなく修正します。</p></div>
+        <div class="skill"><h3>メニューやセクションの追加</h3><p>既存のデザインに合わせて、新しい項目やお知らせ枠を追加します。</p></div>
+        <div class="skill"><h3>スマホ表示の調整</h3><p>表示崩れの修正や、スマホ向けレイアウトの調整を行います。</p></div>
+        <div class="skill"><h3>不具合の調査と修正</h3><p>ボタンが動かない、表示されないといった不具合の原因を調べて直します。</p></div>
+        <div class="skill"><h3>画像の差し替え・追加</h3><p>写真の入れ替えや、画像を置く枠の追加に対応します。</p></div>
+        <div class="skill"><h3>小規模サイトの新規制作</h3><p>店舗やサービスを紹介する1〜数ページのサイトを制作します。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="flow">
+    <div class="wrap">
+      <div class="part-head"><h2>Flow</h2><span>作業の進め方</span></div>
+      <ol class="steps">
+        <li><h3>依頼内容の確認</h3><p>修正したい箇所を伺い、あいまいな点は作業前に確認します。</p></li>
+        <li><h3>ファイルのお預かり</h3><p>サイトのファイル一式を受け取り、元の状態をバックアップします。</p></li>
+        <li><h3>修正箇所の洗い出し</h3><p>同じ情報が書かれた場所をすべて探し、影響範囲を確認します。</p></li>
+        <li><h3>修正</h3><p>既存のデザインや書き方に合わせて修正します。</p></li>
+        <li><h3>表示確認</h3><p>パソコンとスマホの両方で、表示と動作を確認します。</p></li>
+        <li><h3>納品とご報告</h3><p>どのファイルのどこを変えたか、一覧にしてお渡しします。</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 kanari</div>
+</footer>
+
+</body>
+</html>
