@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kanari｜LP制作</title>
+<meta name="description" content="kanari のLP制作実績。申し込み・購入・応募につながる1ページを、構成からコーディングまで制作します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: 名前と一文 → LPを1件ずつ「縦長のミニ画面＋目的・対象・構成・工夫」で4件 → 対応範囲 → 制作の流れ。ミニ画面はLPらしく縦長にする */
+:root {
+  --paper: #f5f5f1;
+  --card: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5f636b;
+  --rule: #dcdcd4;
+  --canary: #f0c419;
+  --canary-ink: #7a5d00;
+  --font-display: "Bricolage Grotesque", "Zen Kaku Gothic New", system-ui, sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16171a; --card: #1e2024; --ink: #ececea; --muted: #a2a5ab;
+    --rule: #2e3036; --canary: #e8bd22; --canary-ink: #f0cd55;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.85; letter-spacing: .02em; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--canary); outline-offset: 3px; }
+.wrap { max-width: 1000px; margin-inline: auto; padding-inline: 20px; }
+
+.crumb { padding-block: 20px 0; font-size: 13px; }
+.crumb a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+
+.hero { padding-block: 56px 48px; }
+.hero .label { font-family: var(--font-mono); font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+.hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 12vw, 112px); line-height: .95; letter-spacing: -.03em; margin: 0 0 24px; }
+.hero h1 .lp { display: inline-block; background: var(--canary); color: #1b1d22; padding: 0 .12em; border-radius: .08em; margin-left: .12em; }
+.hero p { font-size: clamp(17px, 2.4vw, 20px); max-width: 32em; margin: 0; text-wrap: balance; }
+.hero nav { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 32px; font-size: 14px; }
+.hero nav a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.hero nav a:hover { border-color: var(--ink); }
+
+section.part { padding-block: 64px; border-top: 1px solid var(--rule); }
+.part-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
+.part-head h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; margin: 0; }
+.part-head span { font-size: 13px; color: var(--muted); }
+
+/* LP作品 */
+.lps { display: grid; gap: 64px; }
+.lp-item { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 40px; align-items: start; }
+.lp-body { min-width: 0; }
+.kind { display: inline-block; font-family: var(--font-mono); font-size: 12px; color: var(--canary-ink); border: 1px solid currentColor; border-radius: 4px; padding: 0 8px; }
+.lp-item h3 { font-size: 24px; margin: 10px 0 16px; line-height: 1.4; }
+.facts { margin: 0 0 18px; display: grid; grid-template-columns: 5.5em 1fr; gap: 6px 16px; font-size: 15px; }
+.facts dt { color: var(--muted); font-size: 14px; }
+.facts dd { margin: 0; }
+.flow-chips { display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; margin: 0 0 18px; padding: 0; list-style: none; font-size: 13px; }
+.flow-chips li { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 8px; }
+.flow-chips li + li::before { content: "→"; color: var(--muted); margin-right: 8px; margin-left: -2px; }
+.flow-chips li + li { border: none; background: none; padding: 0; }
+.flow-chips li + li span { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 8px; }
+.ideas { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 6px; font-size: 15px; }
+.ideas li { display: grid; grid-template-columns: 1.2em 1fr; }
+.ideas li::before { content: "—"; color: var(--muted); }
+.btn { display: inline-block; text-decoration: none; font-size: 14px; font-weight: 500; padding: 9px 20px; border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); transition: background .15s, color .15s; }
+.btn:hover { background: transparent; color: var(--ink); }
+@media (max-width: 760px) { .lp-item { grid-template-columns: 1fr; gap: 20px; } .phone-frame { max-width: 240px; } }
+
+/* 縦長のミニ画面（スマホで見たLPの再現） */
+.phone-frame { display: block; text-decoration: none; border: 1px solid var(--rule); border-radius: 22px; padding: 10px; background: var(--card); box-shadow: 0 24px 40px -30px rgba(0,0,0,.5); transition: transform .2s; }
+.phone-frame:hover { transform: translateY(-3px); }
+.mini { aspect-ratio: 9 / 17; max-width: 100%; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; font-size: 10px; line-height: 1.4; }
+.mini .s { padding: 10px 12px; }
+
+.m-gym { background: #f2f2ef; color: #121417; }
+.m-gym .hero-b { background: #121417; color: #fff; padding: 16px 12px 26px; clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); }
+.m-gym .tag { background: #e2231a; display: inline-block; padding: 0 5px; font-size: 8px; margin-bottom: 6px; }
+.m-gym h4 { font-family: "Noto Sans JP", var(--font-body); font-weight: 900; font-size: 17px; line-height: 1.3; margin: 0 0 8px; }
+.m-gym h4 b { color: #e2231a; }
+.m-gym .cta { background: #e2231a; color: #fff; font-weight: 700; text-align: center; padding: 6px; font-size: 10px; }
+.m-gym .nums { display: flex; gap: 10px; margin-top: 10px; font-family: "Anton", Impact, sans-serif; font-size: 16px; }
+.m-gym .rows { display: grid; gap: 4px; }
+.m-gym .rows i { height: 16px; background: #fff; border-left: 3px solid #121417; }
+.m-gym .fix { margin-top: auto; background: #e2231a; color: #fff; text-align: center; font-weight: 700; padding: 7px; }
+
+.m-honey { background: #f7f6f1; color: #26302a; }
+.m-honey .hero-b { background: #22382b; color: #f3efe2; padding: 12px; }
+.m-honey .brand { font-family: "Shippori Mincho", serif; letter-spacing: .2em; font-size: 9px; margin-bottom: 10px; }
+.m-honey .jars { display: flex; justify-content: center; gap: 8px; align-items: flex-end; margin-bottom: 10px; }
+.m-honey .jars i { width: 22%; aspect-ratio: 3 / 4; border-radius: 4px 4px 8px 8px; }
+.m-honey .jars i:nth-child(1) { background: #f1d77a; }
+.m-honey .jars i:nth-child(2) { background: #c98a1c; transform: translateY(-6px); }
+.m-honey .jars i:nth-child(3) { background: #8f5a14; }
+.m-honey h4 { font-family: "Shippori Mincho", serif; font-size: 14px; line-height: 1.5; margin: 0; }
+.m-honey .cards { display: grid; gap: 5px; }
+.m-honey .cards i { height: 26px; background: #fff; border: 1px solid #dedbd0; border-radius: 3px; border-top: 3px solid; }
+.m-honey .cards i:nth-child(1) { border-top-color: #f1d77a; }
+.m-honey .cards i:nth-child(2) { border-top-color: #c98a1c; }
+.m-honey .cards i:nth-child(3) { border-top-color: #8f5a14; }
+.m-honey .buy { margin-top: auto; background: #fbf3dc; padding: 10px 12px; font-family: "Shippori Mincho", serif; font-weight: 700; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+.m-honey .buy span { background: #e1a017; color: #22382b; border-radius: 99px; padding: 2px 8px; font-family: var(--font-body); font-size: 9px; }
+
+.m-recruit { background: #fff; color: #1d2b2a; }
+.m-recruit .hero-b { background: #0b7a6f; color: #fff; padding: 12px 12px 20px; display: grid; gap: 6px; }
+.m-recruit .clock { width: 46px; height: 46px; border-radius: 50%; background: #fff; justify-self: center; position: relative; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }
+.m-recruit .clock::before { content: ""; position: absolute; left: 50%; top: 22%; bottom: 22%; width: 2px; margin-left: -1px; background: #1d2b2a; }
+.m-recruit h4 { font-size: 14px; line-height: 1.4; margin: 0; }
+.m-recruit h4 b { color: #ffc72c; }
+.m-recruit .nums { margin: -10px 10px 0; background: #fff; border: 1.5px solid #1d2b2a; border-radius: 6px; display: grid; grid-template-columns: 1fr 1fr; text-align: center; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 15px; color: #0b7a6f; position: relative; }
+.m-recruit .nums span { padding: 3px; }
+.m-recruit .tl { display: grid; gap: 5px; padding: 10px 12px; }
+.m-recruit .tl i { height: 8px; background: #f1f6f5; border-left: 3px solid #0b7a6f; }
+.m-recruit .apply { margin-top: auto; background: #0b7a6f; padding: 10px 12px; }
+.m-recruit .apply span { display: block; background: #ffc72c; color: #1d2b2a; text-align: center; font-weight: 700; border-radius: 4px; padding: 5px; }
+
+.m-tsumiki { background: #eef5fc; color: #16324f; }
+.m-tsumiki .hero-b { padding: 14px 12px; }
+.m-tsumiki h4 { font-family: "M PLUS Rounded 1c", var(--font-body); font-weight: 800; font-size: 15px; line-height: 1.35; margin: 0 0 10px; }
+.m-tsumiki h4 b { color: #f47c20; }
+.m-tsumiki .blocks { display: grid; gap: 3px; }
+.m-tsumiki .blocks i { height: 11px; border-radius: 3px; }
+.m-tsumiki .blocks i:nth-child(1) { background: #f5c125; width: 80%; border-radius: 8px 8px 3px 3px; }
+.m-tsumiki .blocks i:nth-child(2) { background: #3d8bf2; width: 65%; margin-left: 10%; }
+.m-tsumiki .blocks i:nth-child(3) { background: #3fae5a; width: 80%; margin-left: 10%; }
+.m-tsumiki .blocks i:nth-child(4) { background: #8a63e8; width: 50%; margin-left: 10%; }
+.m-tsumiki .facts-b { margin: 10px 12px 0; background: #fff; border: 1.5px solid #16324f; border-radius: 8px; height: 30px; }
+.m-tsumiki .feat { display: grid; gap: 5px; padding: 10px 12px; }
+.m-tsumiki .feat i { height: 22px; background: #fff; border-radius: 6px; }
+.m-tsumiki .cta { margin: auto 12px 12px; background: #f47c20; color: #fff; font-weight: 800; text-align: center; border-radius: 99px; padding: 6px; box-shadow: 0 3px 0 #d9650c; }
+
+/* 対応範囲 */
+.scope { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.scope div { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 22px; }
+.scope h3 { margin: 0 0 6px; font-size: 17px; }
+.scope p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75; }
+@media (max-width: 760px) { .scope { grid-template-columns: 1fr; } }
+
+/* 制作の流れ */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; counter-reset: step; }
+.steps li { counter-increment: step; border-top: 2px solid var(--ink); padding-top: 12px; }
+.steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 13px; color: var(--canary-ink); }
+.steps h3 { margin: 2px 0 4px; font-size: 16px; }
+.steps p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; gap: 20px; } }
+
+footer { border-top: 1px solid var(--rule); padding-block: 28px 40px; font-size: 13px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+footer a { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="wrap crumb"><a href="../">← kanari ポートフォリオ（サイト修正・制作）</a></div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="label">Landing pages</p>
+    <h1>kanari<span class="lp">LP</span></h1>
+    <p>申し込み・購入・応募につながる1ページを、構成からデザイン、コーディング、スマホ対応まで制作します。</p>
+    <nav aria-label="ページ内リンク">
+      <a href="#works">LP制作実績</a>
+      <a href="#scope">対応範囲</a>
+      <a href="#flow">制作の流れ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="part" id="works">
+    <div class="wrap">
+      <div class="part-head"><h2>Works</h2><span>LP制作実績（いずれも架空の依頼によるサンプルです）</span></div>
+      <div class="lps">
+
+        <article class="lp-item">
+          <a class="phone-frame" href="https://mashite792.github.io/roots-gym-lp/" target="_blank" rel="noopener" aria-label="パーソナルジム ROOTS のLPを開く">
+            <div class="mini m-gym" aria-hidden="true">
+              <div class="hero-b"><span class="tag">体験 0円</span><h4>2か月で、<br><b>一生モノ</b>の<br>体の使い方を。</h4><div class="cta">体験を予約する</div><div class="nums"><span>100%</span><span>16</span><span>30</span></div></div>
+              <div class="s rows"><i></i><i></i><i></i></div>
+              <div class="fix">0円で体験を予約する</div>
+            </div>
+          </a>
+          <div class="lp-body">
+            <span class="kind">健康・フィットネス</span>
+            <h3>パーソナルジム ROOTS</h3>
+            <dl class="facts">
+              <dt>目的</dt><dd>無料体験トレーニングの予約</dd>
+              <dt>対象</dt><dd>運動が続かなかった経験のある30〜40代の会社員</dd>
+            </dl>
+            <ul class="flow-chips" aria-label="ページの構成">
+              <li>悩み</li><li><span>3つの約束</span></li><li><span>料金</span></li><li><span>体験の流れ</span></li><li><span>事例</span></li><li><span>FAQ</span></li><li><span>予約</span></li>
+            </ul>
+            <ul class="ideas">
+              <li>「完全個室」「16回」「30日返金保証」をヒーローで数字として見せ、最初の数秒で特徴が伝わるように</li>
+              <li>体験の流れに各ステップの所要時間を書き、初めての人が当日の様子を想像できるように</li>
+              <li>スマホでは画面下に予約ボタンを固定し、どこまで読んでもすぐ申し込めるように</li>
+              <li>予約フォームは、明日以降の日付だけを選べるように制御</li>
+            </ul>
+            <a class="btn" href="https://mashite792.github.io/roots-gym-lp/" target="_blank" rel="noopener">LPを見る</a>
+          </div>
+        </article>
+
+        <article class="lp-item">
+          <a class="phone-frame" href="https://mashite792.github.io/yamabachi-honey-lp/" target="_blank" rel="noopener" aria-label="山の蜂舎 のLPを開く">
+            <div class="mini m-honey" aria-hidden="true">
+              <div class="hero-b"><div class="brand">山の蜂舎</div><div class="jars"><i></i><i></i><i></i></div><h4>花が変われば、<br>はちみつの味も変わる。</h4></div>
+              <div class="s cards"><i></i><i></i><i></i></div>
+              <div class="buy">4,320円<span>カートに入れる</span></div>
+            </div>
+          </a>
+          <div class="lp-body">
+            <span class="kind">商品・EC</span>
+            <h3>山の蜂舎 はちみつ食べ比べセット</h3>
+            <dl class="facts">
+              <dt>目的</dt><dd>3種セットの購入（ギフト需要も）</dd>
+              <dt>対象</dt><dd>食材にこだわりがあり、贈り物を探している人</dd>
+            </dl>
+            <ul class="flow-chips" aria-label="ページの構成">
+              <li>3種の違い</li><li><span>採蜜の暦</span></li><li><span>養蜂家の想い</span></li><li><span>食べ方</span></li><li><span>購入</span></li><li><span>FAQ</span></li>
+            </ul>
+            <ul class="ideas">
+              <li>甘さ・コク・香りを、巣の形の目盛りで比べられるようにして、違いをひと目で伝える</li>
+              <li>「採蜜の暦」で、季節ごとにしか採れない希少さを表現</li>
+              <li>結晶化を「非加熱だからこそ」と先に説明し、届いたあとの不安や問い合わせを減らす</li>
+              <li>数量と包装を選ぶと、合計金額がその場で変わるように</li>
+            </ul>
+            <a class="btn" href="https://mashite792.github.io/yamabachi-honey-lp/" target="_blank" rel="noopener">LPを見る</a>
+          </div>
+        </article>
+
+        <article class="lp-item">
+          <a class="phone-frame" href="https://mashite792.github.io/midori-recruit-lp/" target="_blank" rel="noopener" aria-label="みどり運輸 採用LPを開く">
+            <div class="mini m-recruit" aria-hidden="true">
+              <div class="hero-b"><div class="clock"></div><h4>夕方<b>6時</b>には、<br>家に帰れる運送会社です。</h4></div>
+              <div class="nums"><span>120日</span><span>8時間</span></div>
+              <div class="tl"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="apply"><span>応募する</span></div>
+            </div>
+          </a>
+          <div class="lp-body">
+            <span class="kind">採用</span>
+            <h3>みどり運輸 ドライバー採用</h3>
+            <dl class="facts">
+              <dt>目的</dt><dd>正社員ドライバーへの応募</dd>
+              <dt>対象</dt><dd>長時間労働に悩む、運送業・飲食業などで働く30〜50代</dd>
+            </dl>
+            <ul class="flow-chips" aria-label="ページの構成">
+              <li>数字で見る働き方</li><li><span>仕事内容</span></li><li><span>1日の流れ</span></li><li><span>先輩の声</span></li><li><span>募集要項</span></li><li><span>選考の流れ</span></li><li><span>応募</span></li>
+            </ul>
+            <ul class="ideas">
+              <li>いちばんの強みである「帰宅時間の早さ」を、6時を指す時計の絵で印象づける</li>
+              <li>1日の流れを時刻の縦軸で見せ、働く姿を具体的にイメージできるように</li>
+              <li>年配の方にも読みやすい、ユニバーサルデザインの書体を採用</li>
+              <li>応募フォームは項目を最小限にし、「3分で完了」と明記して応募のハードルを下げる</li>
+            </ul>
+            <a class="btn" href="https://mashite792.github.io/midori-recruit-lp/" target="_blank" rel="noopener">LPを見る</a>
+          </div>
+        </article>
+
+        <article class="lp-item">
+          <a class="phone-frame" href="https://mashite792.github.io/tsumiki-lp/" target="_blank" rel="noopener" aria-label="つみきプログラミング教室 のLPを開く">
+            <div class="mini m-tsumiki" aria-hidden="true">
+              <div class="hero-b"><h4>好きなゲームを、<br><b>自分でつくって</b><br>みよう。</h4><div class="blocks"><i></i><i></i><i></i><i></i></div></div>
+              <div class="facts-b"></div>
+              <div class="feat"><i></i><i></i><i></i></div>
+              <div class="cta">無料体験会に申し込む</div>
+            </div>
+          </a>
+          <div class="lp-body">
+            <span class="kind">教育・習い事</span>
+            <h3>つみきプログラミング教室</h3>
+            <dl class="facts">
+              <dt>目的</dt><dd>無料体験会への申し込み</dd>
+              <dt>対象</dt><dd>小学生の子どもを持つ保護者</dd>
+            </dl>
+            <ul class="flow-chips" aria-label="ページの構成">
+              <li>悩み</li><li><span>特長</span></li><li><span>学年別コース</span></li><li><span>料金</span></li><li><span>FAQ</span></li><li><span>申込</span></li>
+            </ul>
+            <ul class="ideas">
+              <li>プログラミングのブロックを積み上げた絵をCSSだけで描き、教室の内容がひと目でわかるように</li>
+              <li>日時・時間・定員・持ち物を、ヒーロー直下にまとめて表示</li>
+              <li>FAQに「体験のあとに勧誘はあるか」を入れ、保護者の不安に先回り</li>
+              <li>希望日の選択肢に、今日以降の土曜日を自動で表示</li>
+            </ul>
+            <a class="btn" href="https://mashite792.github.io/tsumiki-lp/" target="_blank" rel="noopener">LPを見る</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="scope">
+    <div class="wrap">
+      <div class="part-head"><h2>Scope</h2><span>対応範囲</span></div>
+      <div class="scope">
+        <div><h3>構成案の作成</h3><p>誰に、何をしてほしいページかを整理し、読む順番を設計します。</p></div>
+        <div><h3>文章の作成・調整</h3><p>見出しやボタンの文言を、行動につながる言葉に整えます。</p></div>
+        <div><h3>デザイン</h3><p>業種や対象に合わせて、配色・書体・図解を決めます。</p></div>
+        <div><h3>コーディング</h3><p>HTML/CSS/JavaScriptで、軽く表示の速いページに仕上げます。</p></div>
+        <div><h3>スマホ対応</h3><p>スマホでの読みやすさと、申し込みボタンの押しやすさを重視します。</p></div>
+        <div><h3>フォームの動き</h3><p>入力チェックや、選んだ内容に応じた表示の切り替えに対応します。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="flow">
+    <div class="wrap">
+      <div class="part-head"><h2>Flow</h2><span>LP制作の流れ</span></div>
+      <ol class="steps">
+        <li><h3>ヒアリング</h3><p>商品やサービスの強み、届けたい相手、ゴールを伺います。</p></li>
+        <li><h3>構成案</h3><p>セクションの順番と、各セクションで伝えることを一覧でご提案します。</p></li>
+        <li><h3>デザイン</h3><p>ファーストビューから順に、実際の見た目でご確認いただきます。</p></li>
+        <li><h3>コーディング</h3><p>パソコンとスマホの両方で表示を確認しながら組み上げます。</p></li>
+        <li><h3>確認・修正</h3><p>文言や画像の差し替えなど、ご要望を反映します。</p></li>
+        <li><h3>公開</h3><p>ファイル一式をお渡しし、必要に応じて公開作業をお手伝いします。</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 kanari</span><a href="../">サイト修正・制作のポートフォリオはこちら</a></div>
+</footer>
+
+</body>
+</html>
